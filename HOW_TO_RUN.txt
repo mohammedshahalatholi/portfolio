@@ -1,0 +1,98 @@
+================================================================================
+  HOW TO RUN PORTFOLIO WEBSITE ON LOCALHOST
+================================================================================
+
+METHOD 1: EASY WAY (Windows - Double-click batch files)
+--------------------------------------------------------
+
+STEP 1: Start Backend Server
+  → Double-click: start_backend.bat
+  → Wait for server to start
+  → Server runs on: http://127.0.0.1:8000
+
+STEP 2: Create Admin User (First Time Only)
+  → Open a NEW terminal/command prompt
+  → Run these commands:
+     cd backend
+     python manage.py createsuperuser
+  → Enter username, email, and password when prompted
+
+STEP 3: Start Frontend Server
+  → Open a NEW terminal (keep backend running!)
+  → Double-click: start_frontend.bat
+  → Frontend runs on: http://localhost:3001
+
+STEP 4: Add Content
+  → Open browser: http://127.0.0.1:8000/admin
+  → Login with your superuser credentials
+  → Add your portfolio content:
+     - About (name, bio, profile image)
+     - Projects (title, description, images, links)
+     - Skills (name, category, proficiency)
+     - Experience (work history)
+     - Education (degrees, institutions)
+     - Contact Info (email, phone, location)
+     - Social Links (LinkedIn, GitHub, etc.)
+     - Awards (achievements)
+     - Hobbies (interests)
+  → IMPORTANT: Check "enabled" checkbox for items to display
+
+STEP 5: View Your Portfolio
+  → Open browser: http://localhost:3001
+  → Your portfolio will display all enabled content!
+
+
+METHOD 2: MANUAL WAY (All Platforms)
+--------------------------------------
+
+Backend:
+  1. cd backend
+  2. pip install -r requirements.txt
+  3. python manage.py makemigrations
+  4. python manage.py migrate
+  5. python manage.py createsuperuser (first time only)
+  6. python manage.py runserver
+
+Frontend (in NEW terminal):
+  1. cd frontend
+  2. python -m http.server 3001
+
+Then follow STEP 4 and STEP 5 above.
+
+
+IMPORTANT NOTES:
+----------------
+✓ Keep BOTH servers running (backend + frontend)
+✓ Backend must run on http://127.0.0.1:8000
+✓ Frontend must run on http://localhost:3001
+
+IMPORTANT: If you get "ModuleNotFoundError: No module named 'decouple'" error:
+1. Run: pip install -r requirements.txt
+2. Create .env file in backend directory (or run setup_local.bat)
+3. Then run: python manage.py runserver
+✓ Always enable items in admin panel to display them
+✓ Refresh frontend page after adding content
+
+
+TROUBLESHOOTING:
+----------------
+Problem: Port already in use
+  Solution: Change port number or close other applications
+
+Problem: Module not found
+  Solution: Run: pip install -r requirements.txt
+
+Problem: No content showing
+  Solution: Check "enabled" checkbox in admin panel
+
+Problem: CORS errors
+  Solution: Make sure backend is running and CORS is enabled
+
+
+For more details, see:
+  - QUICK_START.md (detailed guide)
+  - SETUP.md (complete setup instructions)
+  - README.md (full documentation)
+
+================================================================================
+

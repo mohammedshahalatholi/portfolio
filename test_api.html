@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .test-result {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Portfolio API Connection Test</h1>
+    <p>This page tests the connection to your Django backend API.</p>
+    
+    <button onclick="testAPI()">Test API Connection</button>
+    
+    <div id="results"></div>
+
+    <script>
+        const API_BASE_URL = 'http://127.0.0.1:8000/api';
+
+        async function testAPI() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<p>Testing...</p>';
+
+            const tests = [
+                { name: 'About', url: `${API_BASE_URL}/about/` },
+                { name: 'Experiences', url: `${API_BASE_URL}/experiences/` },
+                { name: 'Projects', url: `${API_BASE_URL}/projects/` },
+                { name: 'Skills', url: `${API_BASE_URL}/skills/` },
+                { name: 'Education', url: `${API_BASE_URL}/education/` },
+                { name: 'Contact', url: `${API_BASE_URL}/contact/` },
+                { name: 'Social Links', url: `${API_BASE_URL}/social-links/` },
+                { name: 'Awards', url: `${API_BASE_URL}/awards/` },
+                { name: 'Hobbies', url: `${API_BASE_URL}/hobbies/` },
+            ];
+
+            let html = '';
+
+            for (const test of tests) {
+                try {
+                    console.log(`Testing ${test.name}: ${test.url}`);
+                    const response = await fetch(test.url, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        mode: 'cors'
+                    });
+
+                    console.log(`Response for ${test.name}:`, response.status, response.statusText);
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        html += `
+                            <div class="test-result success">
+                                <h3>✅ ${test.name} - SUCCESS</h3>
+                                <p><strong>URL:</strong> <a href="${test.url}" target="_blank">${test.url}</a></p>
+                                <p><strong>Status:</strong> ${response.status} ${response.statusText}</p>
+                                <p><strong>Data:</strong></p>
+                                <pre>${JSON.stringify(data, null, 2)}</pre>
+                            </div>
+                        `;
+                    } else {
+                        html += `
+                            <div class="test-result error">
+                                <h3>❌ ${test.name} - ERROR</h3>
+                                <p><strong>URL:</strong> ${test.url}</p>
+                                <p><strong>Status:</strong> ${response.status} ${response.statusText}</p>
+                            </div>
+                        `;
+                    }
+                } catch (error) {
+                    console.error(`Error testing ${test.name}:`, error);
+                    html += `
+                        <div class="test-result error">
+                            <h3>❌ ${test.name} - CONNECTION ERROR</h3>
+                            <p><strong>URL:</strong> ${test.url}</p>
+                            <p><strong>Error:</strong> ${error.message}</p>
+                            <p><strong>Details:</strong> ${error.stack || 'No stack trace'}</p>
+                        </div>
+                    `;
+                }
+            }
+
+            resultsDiv.innerHTML = html;
+        }
+
+        // Auto-run test on page load
+        window.addEventListener('load', () => {
+            testAPI();
+        });
+    </script>
+</body>
+</html>
+
