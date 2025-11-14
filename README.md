@@ -282,7 +282,9 @@ The portfolio is ready for deployment to various hosting platforms. See the depl
 - [ ] Setup SSL/HTTPS certificate
 - [ ] Configure static and media files serving
 - [ ] Test all functionality in production
-
+Access url
+Frontend : https://mohammedshahalatholi.github.io/frontend-portfolio/
+backend : https://mohammedshahal.pythonanywhere.com/admin/
 ## License
 
 This project is open source and available under the MIT License.
